@@ -62,6 +62,8 @@
 				]
 			}
 		],
-		"annotations": []
+		"annotations": [
+			"Copy"
+		]
 	}
 }
