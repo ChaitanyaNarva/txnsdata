@@ -1,5 +1,13 @@
 {
 	"name": "ADFGitDemo85",
+	"properties": {
+		"globalParameters": {
+			"RootFolderName": {
+				"type": "string",
+				"value": "bronzezone/input"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
