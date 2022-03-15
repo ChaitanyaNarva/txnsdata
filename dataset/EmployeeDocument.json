@@ -1,5 +1,5 @@
 {
-	"name": "EmployeesDataset",
+	"name": "EmployeeDocument",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "employee1.csv",
+				"fileName": "EmployeeDocument.csv",
 				"fileSystem": "bronzezone"
 			},
 			"columnDelimiter": ",",
@@ -28,7 +28,11 @@
 				"type": "String"
 			},
 			{
-				"name": "EmpDept",
+				"name": "Skills",
+				"type": "String"
+			},
+			{
+				"name": "Address",
 				"type": "String"
 			}
 		]
