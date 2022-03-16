@@ -5,42 +5,44 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "EmployeesDataset",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorage",
+						"type": "LinkedServiceReference"
 					},
-					"name": "Employee"
+					"name": "EmployeeDataset"
 				}
 			],
-			"sinks": [
-				{
-					"name": "Sink"
-				}
-			],
+			"sinks": [],
 			"transformations": [
 				{
-					"name": "aggregateOnSalary"
+					"name": "assert1"
+				},
+				{
+					"name": "assert2"
+				},
+				{
+					"name": "assert3"
+				},
+				{
+					"name": "exists1"
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          EmpID as short,",
-				"          EmpName as string,",
-				"          Salary as short,",
-				"          EmpDept as short",
-				"     ),",
-				"     allowSchemaDrift: true,",
+				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> Employee",
-				"Employee aggregate(MaxSalary = max(Salary)) ~> aggregateOnSalary",
-				"aggregateOnSalary sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     store: 'cache',",
-				"     format: 'inline',",
-				"     output: true,",
-				"     saveOrder: 1) ~> Sink"
+				"     ignoreNoFilesFound: false,",
+				"     format: 'delimited',",
+				"     fileSystem: 'bronzezone',",
+				"     fileName: 'Employee.csv',",
+				"     columnDelimiter: ',',",
+				"     escapeChar: '\\\\',",
+				"     quoteChar: '\\\"',",
+				"     columnNamesAsHeader: true) ~> EmployeeDataset",
+				"assert2 assert() ~> assert1",
+				"assert3 assert() ~> assert2",
+				"exists1 assert() ~> assert3",
+				"EmployeeDataset exists(negate:false,",
+				"     broadcast: 'auto')~> exists1"
 			]
 		}
 	}
