@@ -1,0 +1,36 @@
+{
+	"name": "flowlet1",
+	"properties": {
+		"type": "Flowlet",
+		"typeProperties": {
+			"sources": [],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "CountNoOfRecords"
+				},
+				{
+					"name": "input"
+				},
+				{
+					"name": "output"
+				}
+			],
+			"scriptLines": [
+				"input(output(",
+				"          EmpID as string,",
+				"          EmpName as string,",
+				"          DOJ as string,",
+				"          EmpDept as string,",
+				"          DeptID as string,",
+				"          DeptName as string",
+				"     ),",
+				"     order: 0) ~> input",
+				"input aggregate(count = count()) ~> CountNoOfRecords",
+				"CountNoOfRecords output(mapColumn(",
+				"          count",
+				"     )) ~> output"
+			]
+		}
+	}
+}
